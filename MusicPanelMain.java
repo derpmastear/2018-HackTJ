@@ -28,6 +28,7 @@ public class MusicPanelMain extends JPanel
 {
    private DetailEditorMusic details;
    private SongPlayer songs;
+   private SongPlaylist playlist;
    private JButton songsTab, detailTab;
    private JTabbedPane tabs;
    
@@ -44,6 +45,10 @@ public class MusicPanelMain extends JPanel
       songs = new SongPlayer();
       songs.setPreferredSize(new Dimension(400, 400));
       tabs.add("Player", songs);
+      
+      playlist = new SongPlaylist();
+      songs.setPreferredSize(new Dimension(400, 400));
+      tabs.add("Playlists", playlist);
       
       add(tabs, BorderLayout.CENTER);
    }
