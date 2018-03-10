@@ -1,5 +1,6 @@
 //Song platter
 import javax.swing.*;
+import java.io.*;
 public class SongPlayer extends JPanel 
 {
    private String currentSong;
@@ -8,7 +9,7 @@ public class SongPlayer extends JPanel
    {
       
    }
-   public static getSongs()
+   public static void getSongs()
    {
       File folder = new File("your/path");
       File[] listOfFiles = folder.listFiles();
