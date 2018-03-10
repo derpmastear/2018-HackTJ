@@ -39,11 +39,11 @@ public class MusicPanelMain extends JPanel
       
       details = new DetailEditorMusic();
       details.setPreferredSize(new Dimension(400, 400));
-      //tabs.add("name goes here", object);
+      tabs.add("Detail Editor", details);
       
       songs = new SongPlayer();
       songs.setPreferredSize(new Dimension(400, 400));
-      //tabs.add("name goes here", object);
+      tabs.add("Player", songs);
       
       add(tabs, BorderLayout.CENTER);
    }

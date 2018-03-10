@@ -11,7 +11,7 @@ public class MusicDriver
       frame.setSize(640, 480);
       frame.setLocation(100, 50);
       frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-      frame.setContentPane(new Panel15());
+      frame.setContentPane(new MusicPanelMain());
       frame.setVisible(true);
    }
 }
