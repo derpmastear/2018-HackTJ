@@ -7,7 +7,7 @@ public class MusicDriver
 {
    public static void main(String[] args)
    {
-      JFrame frame = new JFrame("Pirated Music Player");
+      JFrame frame = new JFrame("thiCS");
       frame.setSize(640, 480);
       frame.setLocation(100, 50);
       frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
