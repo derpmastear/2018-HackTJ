@@ -51,14 +51,16 @@ public class SongPlayer extends JPanel
       stop.setEnabled(false);
       
       JPanel CenterPanel = new JPanel();
-      add(CenterPanel, BorderLayout.CENTER);
-      time = new JLabel("0:00");
-      time.setFont(new Font("Dialog", Font.PLAIN, 18));
-      CenterPanel.add(time);
-      currentDur = new Duration(0);
-      
-      currSong = new JLabel("");
+      currSong = new JLabel("Now Playing:");
+      currSong.setFont(new Font("Dialog", Font.PLAIN, 40));
       CenterPanel.add(currSong);
+      
+      time = new JLabel("0:00");
+      time.setFont(new Font("Dialog", Font.PLAIN, 40));
+      CenterPanel.add(time);
+      
+      currentDur = new Duration(0);
+      add(CenterPanel, BorderLayout.CENTER);
    }
    public void getSongs(String s) throws MalformedURLException
    {
@@ -118,6 +120,9 @@ public class SongPlayer extends JPanel
             String s = infile.nextLine();
             getSongs(s);
             player = new MediaPlayer(currentSong);
+            String name = currentSong.getSource().substring(currentSong.getSource().lastIndexOf("/") + 1);
+            currSong.setText("Now playing: " + name);
+            
             player.seek(currentDur);
             player.play();
             play.setEnabled(false);
@@ -136,6 +141,8 @@ public class SongPlayer extends JPanel
                      player.stop();
                      player = new MediaPlayer(currentSong);
                      player.play();
+                     String name = currentSong.getSource().substring(currentSong.getSource().lastIndexOf("/") + 1);
+                     currSong.setText("Now playing: " + name);
                   }
                }
             });
@@ -197,6 +204,8 @@ public class SongPlayer extends JPanel
          }
          else
             time.setText(minutes + ":" + seconds);
+            
+         repaint();
       }
    }
 }

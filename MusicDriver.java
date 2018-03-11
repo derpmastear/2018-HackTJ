@@ -15,8 +15,8 @@ public class MusicDriver
       } 
       catch(Exception e){ 
       }
-      JFrame frame = new JFrame("thiCS");
-      frame.setSize(640, 480);
+      JFrame frame = new JFrame("Harmony Music");
+      frame.setSize(720, 480);
       frame.setLocation(100, 50);
       frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       frame.setContentPane(new MusicPanelMain());
