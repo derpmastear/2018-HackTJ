@@ -7,6 +7,8 @@ import java.awt.*;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.Media;
 import java.net.*;
+import javax.swing.Timer;
+import javafx.util.Duration;
 
 public class SongPlayer extends JPanel 
 {
@@ -16,25 +18,20 @@ public class SongPlayer extends JPanel
    private ArrayList<Media> listOfAllSongs;
    private boolean gotMusic;
    private MediaPlayer player;
+   private Timer timer;
+   private Duration currentDur;
+   
    //Frontend Things
    private JButton play;
    private JButton pause;
    private JButton stop;
+   private JLabel time;
+   private JLabel currSong;
    public SongPlayer() throws Exception//The file path
    {
       setLayout(new BorderLayout());
       Scanner infile = new Scanner( new File("directory.txt") );
       boolean checker = true;
-      /*File directory = new File("directory.txt");
-      if(directory.length() == 0)
-      {
-         checker = false;
-      }
-      if(checker)
-      {
-         String s = infile.nextLine();
-         getSongs(s);
-      }*/
       JPanel SouthPanel = new JPanel();
       add(SouthPanel, BorderLayout.SOUTH);
       ImageIcon playicon = new ImageIcon("play.png");
@@ -52,6 +49,16 @@ public class SongPlayer extends JPanel
       play.setEnabled(true);
       pause.setEnabled(false);
       stop.setEnabled(false);
+      
+      JPanel CenterPanel = new JPanel();
+      add(CenterPanel, BorderLayout.CENTER);
+      time = new JLabel("0:00");
+      time.setFont(new Font("Dialog", Font.PLAIN, 18));
+      CenterPanel.add(time);
+      currentDur = new Duration(0);
+      
+      currSong = new JLabel("");
+      CenterPanel.add(currSong);
    }
    public void getSongs(String s) throws MalformedURLException
    {
@@ -89,23 +96,36 @@ public class SongPlayer extends JPanel
    public void play() throws NoSuchElementException
    {
       try{
-         boolean checker = true;
          File directory = new File("directory.txt");
          Scanner infile = new Scanner( new File("directory.txt") );
-         if(directory.length() == 0)
+         boolean check = false;
+         if( player != null) {
+            check = (player.getStatus() == MediaPlayer.Status.STOPPED);
+         }
+         if(!infile.hasNext())
          {
             JOptionPane.showMessageDialog(null, "You have not chosen a directory yet!", "Error", JOptionPane.ERROR_MESSAGE);
-            checker = false;
          }
-         if(!gotMusic && checker)
-         {
-            String s = infile.nextLine();
-            getSongs(s);
-            player = new MediaPlayer(currentSong);
+         else if(player != null && (player.getStatus() == MediaPlayer.Status.PAUSED || player.getStatus() == MediaPlayer.Status.STOPPED)) {
             player.play();
             play.setEnabled(false);
             pause.setEnabled(true);
             stop.setEnabled(true);
+            timer.start();
+         }
+         else if(!gotMusic)
+         {
+            String s = infile.nextLine();
+            getSongs(s);
+            player = new MediaPlayer(currentSong);
+            player.seek(currentDur);
+            player.play();
+            play.setEnabled(false);
+            pause.setEnabled(true);
+            stop.setEnabled(true);
+            timer = new Timer(1000, new TimeListener(player));
+            timer.setInitialDelay(1000);
+            timer.start();
          }
          player.setOnEndOfMedia(
             new Runnable() {
@@ -131,10 +151,13 @@ public class SongPlayer extends JPanel
    public void stop() throws NoSuchElementException
    {
       player.stop();
+      timer.stop();
    }
    public void pause() throws NoSuchElementException
    {
       player.pause();
+      timer.stop();
+      currentDur = player.getCurrentTime();
    }
 
    private class PlayListener implements ActionListener {
@@ -154,9 +177,26 @@ public class SongPlayer extends JPanel
       public void actionPerformed(ActionEvent e){
          stop();
          play.setEnabled(true);
-         pause.setEnabled(false);
+         pause.setEnabled(true);
          stop.setEnabled(false);
+         time.setText("0:00");
       }
    }
-
+   private class TimeListener implements ActionListener {
+      public MediaPlayer player;
+      public TimeListener(MediaPlayer plater){
+         player = plater;
+      }
+      public void actionPerformed(ActionEvent e){
+         Duration dur = player.getCurrentTime();
+         int seconds = (int)dur.toSeconds() - (int)dur.toMinutes()*60;
+         int minutes = (int)dur.toMinutes();
+         if(seconds < 10)
+         {
+            time.setText(minutes + ":0" + seconds);
+         }
+         else
+            time.setText(minutes + ":" + seconds);
+      }
+   }
 }
