@@ -56,13 +56,13 @@ public class DetailEditorMusic extends JPanel {
    private class FileListener implements ActionListener {
       public void actionPerformed(ActionEvent e){
          chooser.showOpenDialog(find);
-         folder.setText("Folder directory: " + chooser.getSelectedFile());
+         String direc = chooser.getSelectedFile().toString();
+         folder.setText("Folder directory: " + direc);
          try{
             System.setOut(new PrintStream(new FileOutputStream("directory.txt")));
             System.out.print(chooser.getSelectedFile());
-            listOfFiles = new File(folder.getText()).listFiles();
-            
-            
+            File[] directory = new File(direc).listFiles();
+            listOfFiles = directory;   
          }
          catch(FileNotFoundException f){
          }
@@ -75,6 +75,7 @@ public class DetailEditorMusic extends JPanel {
                AudioFile file = AudioFileIO.read(listOfFiles[k]);
                Tag tag = file.getTag();
                tag.setField(FieldKey.ALBUM, album.getText());
+               AudioFileIO.write(file);
                tag.setField(FieldKey.ARTIST, artist.getText());
                AudioFileIO.write(file);
             }
