@@ -98,8 +98,7 @@ public class SongPlayer extends JPanel
          if(!gotMusic && checker)
          {
             String s = infile.nextLine();
-            //getSongs(s);
-            getSongs("C:\\Music\\HAMILTON\\");
+            getSongs(s);
             player = new MediaPlayer(currentSong);
             player.play();
             play.setEnabled(false);
