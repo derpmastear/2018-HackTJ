@@ -81,7 +81,7 @@ public class SongPlayer extends JPanel
          //URI u = new URI(listOfFiles[a].getPath());
          listOfAllSongs.add(new Media(listOfFiles[a].toURI().toString()));
       }
-      currentSong = listOfAllSongs.get(0);
+      currentSong = listOfAllSongs.get(0); //memes
       gotMusic = true;
    }
    public void play() throws NoSuchElementException
