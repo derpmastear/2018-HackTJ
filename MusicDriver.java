@@ -1,21 +1,18 @@
 //I guess this is a thing. -Kwu
 //imports
 import javax.swing.JFrame;
-import javax.swing.UIManager.*;
+import javax.swing.UIManager;
+import java.lang.*;
 
 public class MusicDriver
 {
-   public static void main(String[] args)
+   public static void main(String[] args) throws Exception
    {
-      try {
-         for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-            if ("Nimbus".equals(info.getName())) {
-               UIManager.setLookAndFeel(info.getClassName());
-               break;
-            }
-         }
-      } catch (Exception e) {
-      // If Nimbus is not available, you can set the GUI to another look and feel.
+      try 
+      { 
+         UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel"); 
+      } 
+      catch(Exception e){ 
       }
       JFrame frame = new JFrame("thiCS");
       frame.setSize(640, 480);

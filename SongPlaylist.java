@@ -12,6 +12,5 @@ public class SongPlaylist extends JPanel
    {
       FileWithPlaylists = new File("playlists.txt");
       Scanner infile = new Scanner( new File("playlists.txt") );
-      int numberOfPlaylists = Integer.parseInt(infile.next());
    }
 }
