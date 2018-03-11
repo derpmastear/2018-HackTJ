@@ -6,6 +6,7 @@ import java.awt.event.*;
 import java.awt.*;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.Media;
+import java.net.*;
 
 public class SongPlayer extends JPanel 
 {
@@ -51,18 +52,36 @@ public class SongPlayer extends JPanel
       pause.setEnabled(false);
       stop.setEnabled(false);
    }
-   public void getSongs(String s)
+   public void getSongs(String s) throws MalformedURLException
    {
       File folder = new File(s);
-      File[] listOfFiles = folder.listFiles();
+      
    
+      FilenameFilter txtFileFilter = new FilenameFilter()
+        {    
+            @Override
+            public boolean accept(File dir, String name)
+            {
+                if(name.endsWith(".mp3") || name.endsWith(".wav"))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        };
+        File[] listOfFiles = folder.listFiles(txtFileFilter);
       listOfAllSongs = new ArrayList<Media>();
       
       for(int a= 0; a < listOfFiles.length; a++)
       {
-         listOfAllSongs.add(new Media(listOfFiles[a].getPath()));
+         String t = listOfFiles[a].toURI().toURL().toString();
+         //URI u = new URI(listOfFiles[a].getPath());
+         listOfAllSongs.add(new Media(listOfFiles[a].toURI().toString()));
       }
-      currentSong = listOfAllSongs.get(1);
+      currentSong = listOfAllSongs.get(0);
       gotMusic = true;
    }
    public void play() throws NoSuchElementException
@@ -78,8 +97,9 @@ public class SongPlayer extends JPanel
          }
          if(!gotMusic && checker)
          {
-            String s = infile.next();
-            getSongs(s);
+            String s = infile.nextLine();
+            //getSongs(s);
+            getSongs("C:\\Music\\HAMILTON\\");
             player = new MediaPlayer(currentSong);
             player.play();
             play.setEnabled(false);
@@ -90,6 +110,8 @@ public class SongPlayer extends JPanel
       catch(NoSuchElementException e){
       }
       catch(FileNotFoundException e){
+      }
+      catch(MalformedURLException e){
       }
    }
    public void stop() throws NoSuchElementException
