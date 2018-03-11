@@ -21,11 +21,13 @@ public class DetailEditorMusic extends JPanel {
       add(northPanel, BorderLayout.NORTH);
       
       folder = new JLabel("Folder directory:");
+      folder.setHorizontalAlignment(JLabel.CENTER);
       northPanel.add(folder);
       
       find = new JButton("Find Folder Directory");
       find.addActionListener(new FileListener());
       find.setHorizontalAlignment(JLabel.CENTER);
+      find.setPreferredSize(new Dimension(20, 45));
       northPanel.add(find);
       
       chooser = new JFileChooser("C:");
@@ -36,11 +38,17 @@ public class DetailEditorMusic extends JPanel {
       JPanel centerPanel = new JPanel();
       centerPanel.setLayout(new GridLayout(5, 1));
       
-      centerPanel.add(new JLabel("Album Name:"));
+      JLabel alb = new JLabel("Album Name:");
+      alb.setFont(new Font("Dialog", Font.PLAIN, 18));
+      centerPanel.add(alb);
       album = new JTextField();
       centerPanel.add(album);
-      centerPanel.add(new JLabel(""));
-      centerPanel.add(new JLabel("Contributing Artist(s):"));
+      JLabel space = new JLabel("");
+      space.setFont(new Font("Dialog", Font.PLAIN, 8));
+      centerPanel.add(space);
+      JLabel art = new JLabel("Contributing Artist(s):");
+      art.setFont(new Font("Dialog", Font.PLAIN, 18));
+      centerPanel.add(art);
       artist = new JTextField();
       centerPanel.add(artist);
       add(centerPanel, BorderLayout.CENTER);
@@ -49,22 +57,25 @@ public class DetailEditorMusic extends JPanel {
       //START OF BOTTOM SUBPANEL
       JButton update = new JButton("Update Details");
       update.addActionListener(new UpdateListener());
+      update.setPreferredSize(new Dimension(30, 45));
       add(update, BorderLayout.SOUTH);
       //END OF BOTTOM SUBPANEL
       
    }
    private class FileListener implements ActionListener {
       public void actionPerformed(ActionEvent e){
-         chooser.showOpenDialog(find);
-         String direc = chooser.getSelectedFile().toString();
-         folder.setText("Folder directory: " + direc);
-         try{
-            System.setOut(new PrintStream(new FileOutputStream("directory.txt")));
-            System.out.print(chooser.getSelectedFile());
-            File[] directory = new File(direc).listFiles();
-            listOfFiles = directory;   
-         }
-         catch(FileNotFoundException f){
+         int what = chooser.showOpenDialog(find);
+         if(what == JFileChooser.APPROVE_OPTION) {
+            String direc = chooser.getSelectedFile().toString();
+            folder.setText("Folder directory: " + direc);
+            try{
+               System.setOut(new PrintStream(new FileOutputStream("directory.txt")));
+               System.out.print(chooser.getSelectedFile());
+               File[] directory = new File(direc).listFiles();
+               listOfFiles = directory;   
+            }
+            catch(FileNotFoundException f){
+            }
          }
       }
    }
@@ -74,10 +85,14 @@ public class DetailEditorMusic extends JPanel {
             for(int k = 0; k < listOfFiles.length; k++) {
                AudioFile file = AudioFileIO.read(listOfFiles[k]);
                Tag tag = file.getTag();
-               tag.setField(FieldKey.ALBUM, album.getText());
-               AudioFileIO.write(file);
-               tag.setField(FieldKey.ARTIST, artist.getText());
-               AudioFileIO.write(file);
+               if(album.getText().trim() != "") {
+                  tag.setField(FieldKey.ALBUM, album.getText());
+                  AudioFileIO.write(file);
+               }
+               if(artist.getText().trim() != "") {
+                  tag.setField(FieldKey.ARTIST, artist.getText());
+                  AudioFileIO.write(file);
+               }
             }
          }
          catch (Exception f) {}
