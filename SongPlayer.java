@@ -1,10 +1,14 @@
 //Song platter
 import javax.swing.*;
 import java.io.*;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.Media;
+
 public class SongPlayer extends JPanel 
 {
    private String currentSong;
    private File[] listOfFiles;
+   private Media[] listofAllSongs;
    public SongPlayer() 
    {
       
@@ -13,13 +17,10 @@ public class SongPlayer extends JPanel
    {
       File folder = new File("your/path");
       File[] listOfFiles = folder.listFiles();
-   
-      for (int i = 0; i < listOfFiles.length; i++) {
-         if (listOfFiles[i].isFile()) {
-            System.out.println("File " + listOfFiles[i].getName());
-         } else if (listOfFiles[i].isDirectory()) {
-            System.out.println("Directory " + listOfFiles[i].getName());
-         }
+  
+      Media[] listOfAllMusic = new Media[listOfFiles.length];
+      for(int a= 0; a < listOfFiles.length; a++)
+      {
       }
    }
 }
