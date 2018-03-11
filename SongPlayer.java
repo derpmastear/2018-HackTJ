@@ -20,7 +20,8 @@ public class SongPlayer extends JPanel
       setLayout(new BorderLayout());
       Scanner infile = new Scanner( new File("directory.txt") );
       boolean checker = true;
-      if(infile.next().equals(""))
+      File directory = new File("directory.txt");
+      if(directory.length() == 0)
       {
          JOptionPane.showMessageDialog(null, "You have not chosen a directory yet!", "Error", JOptionPane.ERROR_MESSAGE);
          checker = false;
