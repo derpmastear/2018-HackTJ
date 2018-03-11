@@ -12,6 +12,7 @@ public class SongPlayer extends JPanel
 {
    //Backend Things
    private Media currentSong;
+   private int currentCount = 0;
    private ArrayList<Media> listOfAllSongs;
    private boolean gotMusic;
    private MediaPlayer player;
@@ -82,7 +83,7 @@ public class SongPlayer extends JPanel
          //URI u = new URI(listOfFiles[a].getPath());
          listOfAllSongs.add(new Media(listOfFiles[a].toURI().toString()));
       }
-      currentSong = listOfAllSongs.get(0); //memes
+      currentSong = listOfAllSongs.get(currentCount); //memes
       gotMusic = true;
    }
    public void play() throws NoSuchElementException
@@ -106,6 +107,19 @@ public class SongPlayer extends JPanel
             pause.setEnabled(true);
             stop.setEnabled(true);
          }
+         player.setOnEndOfMedia(
+            new Runnable() {
+               @Override
+               public void run() {
+                  if(currentCount + 1 < listOfAllSongs.size()) {
+                     currentSong = listOfAllSongs.get(++currentCount);
+                     player.stop();
+                     player = new MediaPlayer(currentSong);
+                     player.play();
+                  }
+               }
+            });
+         player.onEndOfMediaProperty();
       }
       catch(NoSuchElementException e){
       }
