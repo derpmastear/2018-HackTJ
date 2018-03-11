@@ -10,7 +10,7 @@ public class MusicDriver
    {
       try 
       { 
-         UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel"); 
+         UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel"); 
       } 
       catch(Exception e){ 
       }
