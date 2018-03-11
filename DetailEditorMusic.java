@@ -2,6 +2,8 @@
 import javax.swing.*;
 import java.awt.event.*;
 import java.awt.*;
+import java.io.*;
+import java.util.*;
 public class DetailEditorMusic extends JPanel {
    private JTextField artist, album;
    private JButton find;
@@ -26,9 +28,15 @@ public class DetailEditorMusic extends JPanel {
       chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
    }
    private class FileListener implements ActionListener {
-      public void actionPerformed(ActionEvent e) {
+      public void actionPerformed(ActionEvent e){
          chooser.showOpenDialog(find);
-         folder.setText("Folder directory: " + chooser.getCurrentDirectory());
+         folder.setText("Folder directory: " + chooser.getSelectedFile());
+         try{
+         System.setOut(new PrintStream(new FileOutputStream("directory.txt")));
+         System.out.print(chooser.getSelectedFile());
+         }
+         catch(FileNotFoundException f){
+         }
       }
    }
 }

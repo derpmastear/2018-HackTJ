@@ -11,7 +11,6 @@ public class SongPlayer extends JPanel
 {
    //Backend Things
    private Media currentSong;
-   private File[] listOfFiles;
    private ArrayList<Media> listOfAllSongs;
    private boolean gotMusic;
    private MediaPlayer player;
@@ -55,12 +54,30 @@ public class SongPlayer extends JPanel
    public void getSongs(String s)
    {
       File folder = new File(s);
-      File[] listOfFiles = folder.listFiles();
-   
+      FilenameFilter txtFileFilter = 
+         new FilenameFilter()
+         {    
+            @Override
+            public boolean accept(File dir, String name)
+            {
+               if(name.endsWith(".txt"))
+               {
+                  return true;
+               }
+               else
+               {
+                  return false;
+               }
+            }
+         };
+     
+        //Passing txtFileFilter to listFiles() method to retrieve only txt files
+         
+      String[] listOfFiles = folder.list(txtFileFilter);
       listOfAllSongs = new ArrayList<Media>();
       for(int a= 0; a < listOfFiles.length; a++)
       {
-         listOfAllSongs.add(new Media(listOfFiles[a].getPath()));
+         listOfAllSongs.add(new Media(listOfFiles[a]));
       }
       currentSong = listOfAllSongs.get(1);
       gotMusic = true;
