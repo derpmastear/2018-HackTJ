@@ -32,6 +32,7 @@ public class MusicPanelMain extends JPanel
    private JButton songsTab, detailTab;
    private JTabbedPane tabs;
    
+   
    public MusicPanelMain() throws Exception
    {
       setLayout(new BorderLayout());

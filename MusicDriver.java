@@ -3,13 +3,14 @@
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 import java.lang.*;
-
+import javafx.embed.swing.JFXPanel;
 public class MusicDriver
 {
    public static void main(String[] args) throws Exception
    {
       try 
       { 
+         new JFXPanel();
          UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel"); 
       } 
       catch(Exception e){ 
