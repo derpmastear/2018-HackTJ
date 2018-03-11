@@ -23,16 +23,16 @@ public class SongPlayer extends JPanel
       setLayout(new BorderLayout());
       Scanner infile = new Scanner( new File("directory.txt") );
       boolean checker = true;
-      File directory = new File("directory.txt");
+      /*File directory = new File("directory.txt");
       if(directory.length() == 0)
       {
          checker = false;
       }
       if(checker)
       {
-         String s = infile.next();
+         String s = infile.nextLine();
          getSongs(s);
-      }
+      }*/
       JPanel SouthPanel = new JPanel();
       add(SouthPanel, BorderLayout.SOUTH);
       ImageIcon playicon = new ImageIcon("play.png");
@@ -54,30 +54,13 @@ public class SongPlayer extends JPanel
    public void getSongs(String s)
    {
       File folder = new File(s);
-      FilenameFilter txtFileFilter = 
-         new FilenameFilter()
-         {    
-            @Override
-            public boolean accept(File dir, String name)
-            {
-               if(name.endsWith(".txt"))
-               {
-                  return true;
-               }
-               else
-               {
-                  return false;
-               }
-            }
-         };
-     
-        //Passing txtFileFilter to listFiles() method to retrieve only txt files
-         
-      String[] listOfFiles = folder.list(txtFileFilter);
+      File[] listOfFiles = folder.listFiles();
+   
       listOfAllSongs = new ArrayList<Media>();
+      
       for(int a= 0; a < listOfFiles.length; a++)
       {
-         listOfAllSongs.add(new Media(listOfFiles[a]));
+         listOfAllSongs.add(new Media(listOfFiles[a].getPath()));
       }
       currentSong = listOfAllSongs.get(1);
       gotMusic = true;
