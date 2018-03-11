@@ -32,8 +32,8 @@ public class DetailEditorMusic extends JPanel {
          chooser.showOpenDialog(find);
          folder.setText("Folder directory: " + chooser.getSelectedFile());
          try{
-         System.setOut(new PrintStream(new FileOutputStream("directory.txt")));
-         System.out.print(chooser.getSelectedFile());
+            System.setOut(new PrintStream(new FileOutputStream("directory.txt")));
+            System.out.print(chooser.getSelectedFile());
          }
          catch(FileNotFoundException f){
          }
