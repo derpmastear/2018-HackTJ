@@ -57,22 +57,23 @@ public class SongPlayer extends JPanel
       File folder = new File(s);
       
    
-      FilenameFilter txtFileFilter = new FilenameFilter()
-        {    
+      FilenameFilter txtFileFilter = 
+         new FilenameFilter()
+         {    
             @Override
             public boolean accept(File dir, String name)
             {
-                if(name.endsWith(".mp3") || name.endsWith(".wav"))
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+               if(name.endsWith(".mp3") || name.endsWith(".wav"))
+               {
+                  return true;
+               }
+               else
+               {
+                  return false;
+               }
             }
-        };
-        File[] listOfFiles = folder.listFiles(txtFileFilter);
+         };
+      File[] listOfFiles = folder.listFiles(txtFileFilter);
       listOfAllSongs = new ArrayList<Media>();
       
       for(int a= 0; a < listOfFiles.length; a++)
