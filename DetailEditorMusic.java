@@ -6,7 +6,7 @@ public class DetailEditorMusic extends JPanel {
    private JTextField artist, album;
    private JButton find;
    private JLabel folder;
-   private JFileChooser select;
+   private JFileChooser chooser;
    public DetailEditorMusic() {
       setLayout(new BorderLayout());
       
@@ -22,11 +22,13 @@ public class DetailEditorMusic extends JPanel {
       find.setHorizontalAlignment(JLabel.CENTER);
       northPanel.add(find);
       
-      select = new JFileChooser("C:");
+      chooser = new JFileChooser("C:");
+      chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
    }
    private class FileListener implements ActionListener {
       public void actionPerformed(ActionEvent e) {
-         select.showOpenDialog(find);
+         chooser.showOpenDialog(find);
+         folder.setText("Folder directory: " + chooser.getCurrentDirectory());
       }
    }
 }
